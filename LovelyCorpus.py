@@ -12,7 +12,7 @@ from types import *
 FIRST = 0
 LAST = -1
 
-def setintrange(fname, mn, mx, clposition=LAST, attr=[]):
+def setintrange(fname, mn, mx, clposition=LAST, attr=[], newfname=None):
     """
     Change attributes so that they fall within the given range.
 
@@ -20,21 +20,19 @@ def setintrange(fname, mn, mx, clposition=LAST, attr=[]):
     defined as inclusive of the min and max values provided.
     i.e. [mn, mx]. The index of the classifier for each entry is stored
     in the clposition variable.  If only certain attributes should be 
-    changes a list of indices can be included in the attr variable.
+    changes a list of indices can be included in the attr variable. The
+    defaul behavior is to overwrite the existing file, but a new file 
+    name can be included.
     """
     assert type(mn) is IntType
     assert type(mx) is IntType
     assert type(clposition) is IntType
     assert type(attr) is ListType
     assert mn < mx
-    try: 
-        data = []
-        with open(fname) as f:
-            data.append(f.readline())
-    except IOError:
-        print "Invalid filename"
+    data = _getdata(fname)
+    if not data:
         return
-    data = [data[x].split(',') for x in range(len(data))]
+    data = _splitdata(data)
     if attr == []:
         attr = range(len(data[0]))
         attr.pop(clposition)
@@ -48,6 +46,11 @@ def setintrange(fname, mn, mx, clposition=LAST, attr=[]):
     for i in range(len(data)):
         for a in attr:
             data[i][a] = mn + (data[i][a]/div)
+    if not newfname:
+        newfname = fname
+    with open(newfname, 'w+') as f:
+        for d in data:
+            f.write(','.join(d) + '\n')
     return
 
 def kfold(fname, k):
@@ -61,14 +64,10 @@ def kfold(fname, k):
     """
     assert type(k) is IntType
     assert k > 1
-    try:
-        data = []
-        with open(fname) as f:
-            data.append(f.readline())
-    except IOError:
-        print "Invalid filename"
+    data = _getdata(fname)
+    if not data:
         return
-    rname = fname.splot('.')[0]
+    rname = fname.split('.')[0]
     foldsize = len(data) / k + 1
     unused = list(data)
     names = []
@@ -91,3 +90,62 @@ def kfold(fname, k):
             for d in test:
                 f.write(d)
     return names
+
+def entropygain(fname, clposition=LAST):
+    """
+    Computes the entropy gain of each attributes and returns a list 
+    of those values.
+
+    The list of values match the positions of the attributes in the file.
+    The entropy gain is weighted by the number of different values that are
+    possible for the attribute.
+    """
+    data = _getdata(fname)
+    if not data:
+        return
+    data = [data[x].split(',') for x in range(len(data))]
+    egains = []
+    for a in range(len(data[0])):
+        egains.append(_egain(data, a, clposition)
+    return egains.pop(clposition)
+
+def _egain(data, attr, clposition):
+    freq = {}
+    subentropy = 0.0
+    for d in data:
+        if freq.has_key(data[attr]):
+            freq[data[attr]] += 1.0
+        else:
+            freq[data[attr]] = 1.0
+    for a in freq.keys():
+        prob = freq[a] / sum(freq.values())
+        data_subset = [d for d in data if d[attr] == a]
+        subentropy += prob * _entropy(data_subset, clposition)
+    return _entropy(data, clposition) - subentropy
+
+def _entropy(data, clposition):
+    entropy = 0.0
+    freq = {}
+    for d in data:
+        if freq.has_key(data[clposition]):
+            freq[data[clposition]] += 1.0
+        else:
+            freq[data[clposition]] = 1.0
+    for f in freq.values():
+        entropy += -(f/len(data) * math.log(f/len(data), 2)
+    return entropy
+
+def _getdata(fname):    
+    try:
+        data = []
+        with open(fname) as f:
+            data.append(f.readline())
+    except IOError:
+        print "Invalid filename"
+        return None
+    return data
+
+def _splitdata(data): 
+    data = [data[x].split(',') for x in range(len(data))]
+    data = [[int(data[x][y]) for y in range(len(data[x]))] for x in range(len(data))]
+    return data
