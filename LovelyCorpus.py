@@ -68,7 +68,10 @@ def kfold(fname, k):
     if not data:
         return
     rname = fname.split('.')[0]
-    foldsize = len(data) / k + 1
+    extr = 0
+    if len(data) % k != 0:
+        extr = 1
+    foldsize = len(data) / k + extr
     unused = list(data)
     names = []
     for i in range(k):
@@ -77,7 +80,7 @@ def kfold(fname, k):
         else:
             test = []
             for j in range(foldsize):
-                item = unused.pop(random.randrange(len(unused))
+                item = unused.pop(random.randrange(len(unused)))
                 test.append(item)
         name = rname + str(i)
         names.append(name+'.train')
@@ -106,7 +109,7 @@ def entropygain(fname, clposition=LAST):
     data = [data[x].split(',') for x in range(len(data))]
     egains = []
     for a in range(len(data[0])):
-        egains.append(_egain(data, a, clposition)
+        egains.append(_egain(data, a, clposition))
     return egains.pop(clposition)
 
 def _egain(data, attr, clposition):
@@ -132,14 +135,15 @@ def _entropy(data, clposition):
         else:
             freq[data[clposition]] = 1.0
     for f in freq.values():
-        entropy += -(f/len(data) * math.log(f/len(data), 2)
+        entropy += -(f/len(data) * math.log(f/len(data), 2))
     return entropy
 
 def _getdata(fname):    
     try:
         data = []
         with open(fname) as f:
-            data.append(f.readline())
+            for l in f:
+                data.append(l)
     except IOError:
         print "Invalid filename"
         return None
