@@ -42,15 +42,16 @@ def setintrange(fname, mn, mx, clposition=LAST, attr=[], newfname=None):
         for a in attr:
             curMax = max(data[i][a], curMax)
             curMin = min(data[i][a], curMin)
-    div = mx - mn + 1
+    div = mx - mn + 1.0
+    scale = div/(curMax - curMin + 1.0)
     for i in range(len(data)):
         for a in attr:
-            data[i][a] = mn + (data[i][a]/div)
+            data[i][a] = int(mn + (data[i][a]*scale))
     if not newfname:
         newfname = fname
     with open(newfname, 'w+') as f:
         for d in data:
-            f.write(','.join(d) + '\n')
+            f.write(','.join(str(x) for x in d) + '\n')
     return
 
 def kfold(fname, k):
