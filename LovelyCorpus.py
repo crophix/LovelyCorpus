@@ -148,7 +148,9 @@ def checkrange(fname, minval, maxval, checklist=[], clposition=LAST, remove=Fals
     If no checklist is provided all attributes except the class identifier
     are checked against the provided range.  If the remove flag is set, any line 
     containing a value outside the range are removed.  If the truncate flag
-    is set the values will be truncated to fall within the provided range.
+    is set the values will be truncated to fall within the provided range.  If 
+    the remove or truncate flag are not set, a list of the line numbers that contain
+    out of bounds values is returned.
     """
     assert type(checkList) is ListType
     assert type(minval) is IntType
@@ -162,9 +164,27 @@ def checkrange(fname, minval, maxval, checklist=[], clposition=LAST, remove=Fals
     if checkList = []:
         checklist=range(len(data[0]))
         checklist.pop(clposition)
-    for d in data:
+    linenums = []
+    for i in range(len(data)):
         for a in checklist:
-            
+            if int(data[i][a]) > maxval:
+                data[i][a] = str(maxval)
+                linenums.append(i)
+            elif int(data[i][a]) < minval:
+                data[i][a] = str(minval)
+                linenums.append(i)
+    if remove:
+        linenums = list(set(linenums))
+        linenums.sort()
+        linenums.reverse()
+        for l in linenums:
+            data.pop(l)
+    if remove or truncate:
+        with open(fname) as f:
+            for d in data:
+                f.write(','.join(d) + '\n'
+    else:
+        return linenums
 
 def _getdata(fname):    
     try:
