@@ -7,6 +7,7 @@
 
 import sys
 import random
+import math
 from types import *
 
 FIRST = 0
@@ -111,16 +112,17 @@ def entropygain(fname, clposition=LAST):
     egains = []
     for a in range(len(data[0])):
         egains.append(_egain(data, a, clposition))
-    return egains.pop(clposition)
+    egains.pop(clposition)
+    return egains
 
 def _egain(data, attr, clposition):
     freq = {}
     subentropy = 0.0
     for d in data:
-        if freq.has_key(data[attr]):
-            freq[data[attr]] += 1.0
+        if freq.has_key(d[attr]):
+            freq[d[attr]] += 1.0
         else:
-            freq[data[attr]] = 1.0
+            freq[d[attr]] = 1.0
     for a in freq.keys():
         prob = freq[a] / sum(freq.values())
         data_subset = [d for d in data if d[attr] == a]
@@ -131,13 +133,38 @@ def _entropy(data, clposition):
     entropy = 0.0
     freq = {}
     for d in data:
-        if freq.has_key(data[clposition]):
-            freq[data[clposition]] += 1.0
+        if freq.has_key(d[clposition]):
+            freq[d[clposition]] += 1.0
         else:
-            freq[data[clposition]] = 1.0
+            freq[d[clposition]] = 1.0
     for f in freq.values():
         entropy += -(f/len(data) * math.log(f/len(data), 2))
     return entropy
+
+def checkrange(fname, minval, maxval, checklist=[], clposition=LAST, remove=False, truncate=False):
+    """
+    Verify that the attributes are with the provided range.
+
+    If no checklist is provided all attributes except the class identifier
+    are checked against the provided range.  If the remove flag is set, any line 
+    containing a value outside the range are removed.  If the truncate flag
+    is set the values will be truncated to fall within the provided range.
+    """
+    assert type(checkList) is ListType
+    assert type(minval) is IntType
+    assert type(maxval) is IntType
+    assert minval < maxval
+    assert type(clposition) is IntType
+    data = _getdata(fname)
+    if not data:
+        return
+    data = [d.split(',') for d in data]
+    if checkList = []:
+        checklist=range(len(data[0]))
+        checklist.pop(clposition)
+    for d in data:
+        for a in checklist:
+            
 
 def _getdata(fname):    
     try:
@@ -151,6 +178,6 @@ def _getdata(fname):
     return data
 
 def _splitdata(data): 
-    data = [data[x].split(',') for x in range(len(data))]
+    data = [d.split(',') for d in data]
     data = [[int(data[x][y]) for y in range(len(data[x]))] for x in range(len(data))]
     return data

@@ -54,6 +54,10 @@ def runTests(tests = ALLTESTS):
         print "---" + str(count) + " Val out of range---"
         os.remove(newname)
         print SEPERATE
+    if "entropygain" in tests:
+        print "---Testing entropygain---"
+        fname = "testFiles/1d/entropytest.data"
+        print entropygain(fname)
     print "Finished"
     print SEPERATE
 
