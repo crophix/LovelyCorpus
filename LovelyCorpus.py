@@ -13,6 +13,98 @@ from types import *
 FIRST = 0
 LAST = -1
 
+def attributecount(fname):
+    """
+    Verify that all elements of tha file have the same number of attributes.
+    """
+    data = _getdata(fname)
+    if not data:
+        return
+    l = len(data[0])
+    for d in data:
+        if len(d) != l:
+            return False
+        for a in d:
+            if a == '':
+                return False
+    return True
+
+def removeoutliers(fname, amount, clposition=LAST, newfname=None):
+    """
+    Remove a given amount of data outliers.
+
+    The amount provided can either be an integer value or a decimal value.
+    If it is an integer that number of outliers are removed.  If it is a 
+    decimal that percentage of outliers are removed.  Outliers are 
+    determined using their Euclidean distance from the mean for their class.
+    """    
+    if type(amount) is IntType:
+        isint = True
+    elif type(amount) is FloatType:
+        isint = False
+    else:
+        assert type(amount) is IntType
+    data = _getdata(fname)
+    if not data:
+        return
+    deta = _splitdata(data)
+    avg = _getaverage(data, clposition):
+    dist = []
+    for d in data:
+        cl = d.pop(clposition)
+        total = 0
+        for i in len(d):
+            total += (avg[cl][i] - d[i])**2
+        dist.append(total**0.5)
+    if not isint:
+        amount = int(len(data) * amount + 0.9)
+    for i in range(amount):
+        x = dist.index(max(dist))
+        dist.pop(x)
+        data.pop(x)
+    if not newfname:
+        newfname = fname
+    with open(newfname, 'w+') as f:
+        for d in data:
+            f.write(','.join(str(x) for x in d) + '\n')
+    return
+
+def _getaverage(data, clposition):
+    total = {}
+    count = {}
+    for d in data:
+        cl = d.pop(clposition)
+        if total.has_key(cl):
+            count[cl] += 1.0
+            for i in len(d):
+                total[cl][i] += d[i]
+        else:
+            count[cl] = 1.0
+            total[cl] = d
+    avg = {}
+    for k in total.keys():
+        avg[k] = total[k] / count[k]
+    return avg
+    
+def duplicate(fname, remove=False, newfname=None):
+    """
+    Check the data for an duplicate entries.
+
+    If the remove flag is set, duplicates are removed and the file is
+    overwritten unless a new file name is provided.
+    """
+    data = _getdata(fname)
+    if not data:
+        return
+    for i in range(len(data)):
+        d = data.pop()
+        if d in data:
+            if not remove:
+                return False
+        else:
+            data.append(d)
+    return True
+
 def setintrange(fname, mn, mx, clposition=LAST, attr=[], newfname=None):
     """
     Change attributes so that they fall within the given range.
@@ -111,11 +203,21 @@ def entropygain(fname, clposition=LAST):
     data = [data[x].split(',') for x in range(len(data))]
     egains = []
     for a in range(len(data[0])):
-        egains.append(_egain(data, a, clposition))
+        egains.append(egain(data, a, clposition))
     egains.pop(clposition)
     return egains
 
-def _egain(data, attr, clposition):
+def egain(data, attr, clposition):
+    """
+    Compute the entropy gain of a given attribute.
+
+    data can be either a list or a filename.
+    """
+    assert type(attr) is IntType
+    if type(data) is not ListType:
+        data = _getdata(data)
+        if not data:
+            return
     freq = {}
     subentropy = 0.0
     for d in data:

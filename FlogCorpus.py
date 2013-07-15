@@ -1,4 +1,4 @@
-####################################################
+###################################################
 # Copyright (c) 2013 Daniel Leblanc
 #
 # This program is released under the 'MIT License'. Please
@@ -11,7 +11,7 @@ import os
 import sys
 
 SEPERATE = "********************"
-ALLTESTS = ["kfold", "setintrange", "entropygain"]
+ALLTESTS = ["kfold", "setintrange", "entropygain", "checkrange"]
 
 def runTests(tests = ALLTESTS):
     print SEPERATE
@@ -58,6 +58,20 @@ def runTests(tests = ALLTESTS):
         print "---Testing entropygain---"
         fname = "testFiles/1d/entropytest.data"
         print entropygain(fname)
+        print SEPERATE
+    if "checkrange" in tests:
+        print "---Testing checkrange---"
+        fname = "testFiles/1d/optdigits.data"
+        print "checking for actual range 0-16"
+        if checkrange(fname, 0, 16) == []:
+            print "All lines in range 0-16"
+        else:
+            print "---ERROR---"
+        print "checking smaller range"
+        if checkrange(fname, 2, 10) == []:
+            print "Lines outside of range 2-10"
+        else:
+            print "---ERROR---"
     print "Finished"
     print SEPERATE
 

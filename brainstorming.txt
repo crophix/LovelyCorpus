@@ -1,9 +1,5 @@
 Project brainstorming:
 
-Build and Configuration management tools
-    Since build tools don't really apply, build a test suite that will unsure that the
-    functionality hasn't suffered and that new features work correctly.
-
 Possible Features
 =================
 
@@ -14,22 +10,14 @@ Noise reduction
       * remove any that are a certain distance from the norm
 
 Data validation
-    check that values are inside a given range
     check for missing attributes
-
-Feature evaluation
-    determine how much information is provided by each attribute
 
 Data manipulation
     Normalize data
         change a range of values into a normally distributed set of values
 
-    Compress a value range
-        cluster an attribute into a smaller set of values
-
 Create data subsets
     break a set of data into training/testing sets
-    break the data into sets for k-fold cross validation
 
 Execute external code
     runs other code on the generated data sets
