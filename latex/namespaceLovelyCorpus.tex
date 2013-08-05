@@ -1,0 +1,168 @@
+\hypertarget{namespaceLovelyCorpus}{\section{Lovely\-Corpus Namespace Reference}
+\label{namespaceLovelyCorpus}\index{Lovely\-Corpus@{Lovely\-Corpus}}
+}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceLovelyCorpus_a50fe9b8303b7280079493145ae1240bb}{attributecount}
+\item 
+def \hyperlink{namespaceLovelyCorpus_a52842d2b8f172be63ef8fdeb83888e58}{removeoutliers}
+\item 
+def \hyperlink{namespaceLovelyCorpus_a26ee2374d142e5e6603f0a078fea1974}{duplicate}
+\item 
+def \hyperlink{namespaceLovelyCorpus_a3599cd818c8da3df834d8b78348e9313}{setintrange}
+\item 
+def \hyperlink{namespaceLovelyCorpus_a84317382c4e7d9b457294b731ecfc59a}{kfold}
+\item 
+def \hyperlink{namespaceLovelyCorpus_a550ec4a6c82e820d12e3c623f034324c}{entropygain}
+\item 
+def \hyperlink{namespaceLovelyCorpus_a506bbed5530bdb141a96231a1997ebf1}{egain}
+\item 
+def \hyperlink{namespaceLovelyCorpus_a6cc631182ed1413c6f64a00d0ef4f2b9}{checkrange}
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{namespaceLovelyCorpus_adfa45fc47e2f21cf331cd82de9fc1b8d}{F\-I\-R\-S\-T} = 0
+\item 
+int \hyperlink{namespaceLovelyCorpus_a43c85bdcbbbe7b7357e099bd6d3dd033}{L\-A\-S\-T} = -\/1
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{namespaceLovelyCorpus_a50fe9b8303b7280079493145ae1240bb}{\index{Lovely\-Corpus@{Lovely\-Corpus}!attributecount@{attributecount}}
+\index{attributecount@{attributecount}!LovelyCorpus@{Lovely\-Corpus}}
+\subsubsection[{attributecount}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-attributecount (
+\begin{DoxyParamCaption}
+\item[{}]{fname}
+\end{DoxyParamCaption}
+)}}\label{namespaceLovelyCorpus_a50fe9b8303b7280079493145ae1240bb}
+\begin{DoxyVerb}Verify that all elements of tha file have the same number of attributes.
+\end{DoxyVerb}
+ \hypertarget{namespaceLovelyCorpus_a6cc631182ed1413c6f64a00d0ef4f2b9}{\index{Lovely\-Corpus@{Lovely\-Corpus}!checkrange@{checkrange}}
+\index{checkrange@{checkrange}!LovelyCorpus@{Lovely\-Corpus}}
+\subsubsection[{checkrange}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-checkrange (
+\begin{DoxyParamCaption}
+\item[{}]{fname, }
+\item[{}]{minval, }
+\item[{}]{maxval, }
+\item[{}]{checklist = {\ttfamily \mbox{[}\mbox{]}}, }
+\item[{}]{clposition = {\ttfamily LAST}, }
+\item[{}]{remove = {\ttfamily False}, }
+\item[{}]{truncate = {\ttfamily False}}
+\end{DoxyParamCaption}
+)}}\label{namespaceLovelyCorpus_a6cc631182ed1413c6f64a00d0ef4f2b9}
+\begin{DoxyVerb}Verify that the attributes are with the provided range.
+
+If no checklist is provided all attributes except the class identifier
+are checked against the provided range.  If the remove flag is set, any line 
+containing a value outside the range are removed.  If the truncate flag
+is set the values will be truncated to fall within the provided range.  If 
+the remove or truncate flag are not set, a list of the line numbers that contain
+out of bounds values is returned.
+\end{DoxyVerb}
+ \hypertarget{namespaceLovelyCorpus_a26ee2374d142e5e6603f0a078fea1974}{\index{Lovely\-Corpus@{Lovely\-Corpus}!duplicate@{duplicate}}
+\index{duplicate@{duplicate}!LovelyCorpus@{Lovely\-Corpus}}
+\subsubsection[{duplicate}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-duplicate (
+\begin{DoxyParamCaption}
+\item[{}]{fname, }
+\item[{}]{remove = {\ttfamily False}, }
+\item[{}]{newfname = {\ttfamily None}}
+\end{DoxyParamCaption}
+)}}\label{namespaceLovelyCorpus_a26ee2374d142e5e6603f0a078fea1974}
+\begin{DoxyVerb}Check the data for an duplicate entries.
+
+If the remove flag is set, duplicates are removed and the file is
+overwritten unless a new file name is provided.
+\end{DoxyVerb}
+ \hypertarget{namespaceLovelyCorpus_a506bbed5530bdb141a96231a1997ebf1}{\index{Lovely\-Corpus@{Lovely\-Corpus}!egain@{egain}}
+\index{egain@{egain}!LovelyCorpus@{Lovely\-Corpus}}
+\subsubsection[{egain}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-egain (
+\begin{DoxyParamCaption}
+\item[{}]{data, }
+\item[{}]{attr, }
+\item[{}]{clposition}
+\end{DoxyParamCaption}
+)}}\label{namespaceLovelyCorpus_a506bbed5530bdb141a96231a1997ebf1}
+\begin{DoxyVerb}Compute the entropy gain of a given attribute.
+
+data can be either a list or a filename.
+\end{DoxyVerb}
+ \hypertarget{namespaceLovelyCorpus_a550ec4a6c82e820d12e3c623f034324c}{\index{Lovely\-Corpus@{Lovely\-Corpus}!entropygain@{entropygain}}
+\index{entropygain@{entropygain}!LovelyCorpus@{Lovely\-Corpus}}
+\subsubsection[{entropygain}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-entropygain (
+\begin{DoxyParamCaption}
+\item[{}]{fname, }
+\item[{}]{clposition = {\ttfamily LAST}}
+\end{DoxyParamCaption}
+)}}\label{namespaceLovelyCorpus_a550ec4a6c82e820d12e3c623f034324c}
+\begin{DoxyVerb}Computes the entropy gain of each attributes and returns a list 
+of those values.
+
+The list of values match the positions of the attributes in the file.
+The entropy gain is weighted by the number of different values that are
+possible for the attribute.
+\end{DoxyVerb}
+ \hypertarget{namespaceLovelyCorpus_a84317382c4e7d9b457294b731ecfc59a}{\index{Lovely\-Corpus@{Lovely\-Corpus}!kfold@{kfold}}
+\index{kfold@{kfold}!LovelyCorpus@{Lovely\-Corpus}}
+\subsubsection[{kfold}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-kfold (
+\begin{DoxyParamCaption}
+\item[{}]{fname, }
+\item[{}]{k}
+\end{DoxyParamCaption}
+)}}\label{namespaceLovelyCorpus_a84317382c4e7d9b457294b731ecfc59a}
+\begin{DoxyVerb}Creates 'k' training files and 'k' test files.
+
+The file reference by 'fname' should be in the standard formatting 
+referenced in the documentation.  The names of the training and test
+files will be based on the provided 'fname'.  A list of filenames will 
+be returned.
+\end{DoxyVerb}
+ \hypertarget{namespaceLovelyCorpus_a52842d2b8f172be63ef8fdeb83888e58}{\index{Lovely\-Corpus@{Lovely\-Corpus}!removeoutliers@{removeoutliers}}
+\index{removeoutliers@{removeoutliers}!LovelyCorpus@{Lovely\-Corpus}}
+\subsubsection[{removeoutliers}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-removeoutliers (
+\begin{DoxyParamCaption}
+\item[{}]{fname, }
+\item[{}]{amount, }
+\item[{}]{clposition = {\ttfamily LAST}, }
+\item[{}]{newfname = {\ttfamily None}}
+\end{DoxyParamCaption}
+)}}\label{namespaceLovelyCorpus_a52842d2b8f172be63ef8fdeb83888e58}
+\begin{DoxyVerb}Remove a given amount of data outliers.
+
+The amount provided can either be an integer value or a decimal value.
+If it is an integer that number of outliers are removed.  If it is a 
+decimal that percentage of outliers are removed.  Outliers are 
+determined using their Euclidean distance from the mean for their class.
+\end{DoxyVerb}
+ \hypertarget{namespaceLovelyCorpus_a3599cd818c8da3df834d8b78348e9313}{\index{Lovely\-Corpus@{Lovely\-Corpus}!setintrange@{setintrange}}
+\index{setintrange@{setintrange}!LovelyCorpus@{Lovely\-Corpus}}
+\subsubsection[{setintrange}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-setintrange (
+\begin{DoxyParamCaption}
+\item[{}]{fname, }
+\item[{}]{mn, }
+\item[{}]{mx, }
+\item[{}]{clposition = {\ttfamily LAST}, }
+\item[{}]{attr = {\ttfamily \mbox{[}\mbox{]}}, }
+\item[{}]{newfname = {\ttfamily None}}
+\end{DoxyParamCaption}
+)}}\label{namespaceLovelyCorpus_a3599cd818c8da3df834d8b78348e9313}
+\begin{DoxyVerb}Change attributes so that they fall within the given range.
+
+All attributes are changed to fall within the range. The range is
+defined as inclusive of the min and max values provided.
+i.e. [mn, mx]. The index of the classifier for each entry is stored
+in the clposition variable.  If only certain attributes should be 
+changes a list of indices can be included in the attr variable. The
+defaul behavior is to overwrite the existing file, but a new file 
+name can be included.
+\end{DoxyVerb}
+ 
+
+\subsection{Variable Documentation}
+\hypertarget{namespaceLovelyCorpus_adfa45fc47e2f21cf331cd82de9fc1b8d}{\index{Lovely\-Corpus@{Lovely\-Corpus}!F\-I\-R\-S\-T@{F\-I\-R\-S\-T}}
+\index{F\-I\-R\-S\-T@{F\-I\-R\-S\-T}!LovelyCorpus@{Lovely\-Corpus}}
+\subsubsection[{F\-I\-R\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}int Lovely\-Corpus.\-F\-I\-R\-S\-T = 0}}\label{namespaceLovelyCorpus_adfa45fc47e2f21cf331cd82de9fc1b8d}
+\hypertarget{namespaceLovelyCorpus_a43c85bdcbbbe7b7357e099bd6d3dd033}{\index{Lovely\-Corpus@{Lovely\-Corpus}!L\-A\-S\-T@{L\-A\-S\-T}}
+\index{L\-A\-S\-T@{L\-A\-S\-T}!LovelyCorpus@{Lovely\-Corpus}}
+\subsubsection[{L\-A\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}int Lovely\-Corpus.\-L\-A\-S\-T = -\/1}}\label{namespaceLovelyCorpus_a43c85bdcbbbe7b7357e099bd6d3dd033}
