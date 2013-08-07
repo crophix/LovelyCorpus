@@ -4,21 +4,21 @@
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-def \hyperlink{namespaceLovelyCorpus_a50fe9b8303b7280079493145ae1240bb}{attributecount}
+def \hyperlink{namespaceLovelyCorpus_a5be3606fde5af857b78c886bda270e2f}{attribute\-Count}
 \item 
-def \hyperlink{namespaceLovelyCorpus_a52842d2b8f172be63ef8fdeb83888e58}{removeoutliers}
+def \hyperlink{namespaceLovelyCorpus_a2c0d954a1c41477e81887e5a941251fa}{remove\-Outliers}
 \item 
-def \hyperlink{namespaceLovelyCorpus_a26ee2374d142e5e6603f0a078fea1974}{duplicate}
+def \hyperlink{namespaceLovelyCorpus_a4423563351da00085aec39ce67902fbf}{check\-Duplicates}
 \item 
-def \hyperlink{namespaceLovelyCorpus_a3599cd818c8da3df834d8b78348e9313}{setintrange}
+def \hyperlink{namespaceLovelyCorpus_a65609991e13d0b639ac1520e1d666845}{set\-Int\-Range}
 \item 
 def \hyperlink{namespaceLovelyCorpus_a84317382c4e7d9b457294b731ecfc59a}{kfold}
 \item 
-def \hyperlink{namespaceLovelyCorpus_a550ec4a6c82e820d12e3c623f034324c}{entropygain}
+def \hyperlink{namespaceLovelyCorpus_a8a304131798c4b8a33a69fa554a97a1d}{entropy\-Gain}
 \item 
 def \hyperlink{namespaceLovelyCorpus_a506bbed5530bdb141a96231a1997ebf1}{egain}
 \item 
-def \hyperlink{namespaceLovelyCorpus_a6cc631182ed1413c6f64a00d0ef4f2b9}{checkrange}
+def \hyperlink{namespaceLovelyCorpus_aa049ae6116bbf9cdc5af242ac1b8e2c2}{check\-Range}
 \end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
@@ -30,20 +30,42 @@ int \hyperlink{namespaceLovelyCorpus_a43c85bdcbbbe7b7357e099bd6d3dd033}{L\-A\-S\
 
 
 \subsection{Function Documentation}
-\hypertarget{namespaceLovelyCorpus_a50fe9b8303b7280079493145ae1240bb}{\index{Lovely\-Corpus@{Lovely\-Corpus}!attributecount@{attributecount}}
-\index{attributecount@{attributecount}!LovelyCorpus@{Lovely\-Corpus}}
-\subsubsection[{attributecount}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-attributecount (
+\hypertarget{namespaceLovelyCorpus_a5be3606fde5af857b78c886bda270e2f}{\index{Lovely\-Corpus@{Lovely\-Corpus}!attribute\-Count@{attribute\-Count}}
+\index{attribute\-Count@{attribute\-Count}!LovelyCorpus@{Lovely\-Corpus}}
+\subsubsection[{attribute\-Count}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-attribute\-Count (
 \begin{DoxyParamCaption}
-\item[{}]{fname}
+\item[{}]{data}
 \end{DoxyParamCaption}
-)}}\label{namespaceLovelyCorpus_a50fe9b8303b7280079493145ae1240bb}
-\begin{DoxyVerb}Verify that all elements of tha file have the same number of attributes.
+)}}\label{namespaceLovelyCorpus_a5be3606fde5af857b78c886bda270e2f}
+\begin{DoxyVerb}Verify that all elements in the data have the same number of attributes.
+
+The 'data' variable can be a file name (example.txt), a list of comma 
+separated strings (["1,2,3", "4,5,6", ...]), or a list of already separated 
+values ([[1, 2, 3], [4, 5, 6], ...]).
 \end{DoxyVerb}
- \hypertarget{namespaceLovelyCorpus_a6cc631182ed1413c6f64a00d0ef4f2b9}{\index{Lovely\-Corpus@{Lovely\-Corpus}!checkrange@{checkrange}}
-\index{checkrange@{checkrange}!LovelyCorpus@{Lovely\-Corpus}}
-\subsubsection[{checkrange}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-checkrange (
+ \hypertarget{namespaceLovelyCorpus_a4423563351da00085aec39ce67902fbf}{\index{Lovely\-Corpus@{Lovely\-Corpus}!check\-Duplicates@{check\-Duplicates}}
+\index{check\-Duplicates@{check\-Duplicates}!LovelyCorpus@{Lovely\-Corpus}}
+\subsubsection[{check\-Duplicates}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-check\-Duplicates (
 \begin{DoxyParamCaption}
-\item[{}]{fname, }
+\item[{}]{data, }
+\item[{}]{remove = {\ttfamily False}, }
+\item[{}]{fname = {\ttfamily None}}
+\end{DoxyParamCaption}
+)}}\label{namespaceLovelyCorpus_a4423563351da00085aec39ce67902fbf}
+\begin{DoxyVerb}Check the data for an duplicate entries.
+
+If the remove flag is set, duplicates are removed and the data is
+written to the file name provided.
+
+The 'data' variable can be a file name (example.txt), a list of comma 
+separated strings (["1,2,3", "4,5,6", ...]), or a list of already separated 
+values ([[1, 2, 3], [4, 5, 6], ...]).
+\end{DoxyVerb}
+ \hypertarget{namespaceLovelyCorpus_aa049ae6116bbf9cdc5af242ac1b8e2c2}{\index{Lovely\-Corpus@{Lovely\-Corpus}!check\-Range@{check\-Range}}
+\index{check\-Range@{check\-Range}!LovelyCorpus@{Lovely\-Corpus}}
+\subsubsection[{check\-Range}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-check\-Range (
+\begin{DoxyParamCaption}
+\item[{}]{data, }
 \item[{}]{minval, }
 \item[{}]{maxval, }
 \item[{}]{checklist = {\ttfamily \mbox{[}\mbox{]}}, }
@@ -51,7 +73,7 @@ int \hyperlink{namespaceLovelyCorpus_a43c85bdcbbbe7b7357e099bd6d3dd033}{L\-A\-S\
 \item[{}]{remove = {\ttfamily False}, }
 \item[{}]{truncate = {\ttfamily False}}
 \end{DoxyParamCaption}
-)}}\label{namespaceLovelyCorpus_a6cc631182ed1413c6f64a00d0ef4f2b9}
+)}}\label{namespaceLovelyCorpus_aa049ae6116bbf9cdc5af242ac1b8e2c2}
 \begin{DoxyVerb}Verify that the attributes are with the provided range.
 
 If no checklist is provided all attributes except the class identifier
@@ -59,21 +81,12 @@ are checked against the provided range.  If the remove flag is set, any line
 containing a value outside the range are removed.  If the truncate flag
 is set the values will be truncated to fall within the provided range.  If 
 the remove or truncate flag are not set, a list of the line numbers that contain
-out of bounds values is returned.
-\end{DoxyVerb}
- \hypertarget{namespaceLovelyCorpus_a26ee2374d142e5e6603f0a078fea1974}{\index{Lovely\-Corpus@{Lovely\-Corpus}!duplicate@{duplicate}}
-\index{duplicate@{duplicate}!LovelyCorpus@{Lovely\-Corpus}}
-\subsubsection[{duplicate}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-duplicate (
-\begin{DoxyParamCaption}
-\item[{}]{fname, }
-\item[{}]{remove = {\ttfamily False}, }
-\item[{}]{newfname = {\ttfamily None}}
-\end{DoxyParamCaption}
-)}}\label{namespaceLovelyCorpus_a26ee2374d142e5e6603f0a078fea1974}
-\begin{DoxyVerb}Check the data for an duplicate entries.
+out of bounds values is returned.  Non numerical attributes that are included 
+in the checklist are ignored.
 
-If the remove flag is set, duplicates are removed and the file is
-overwritten unless a new file name is provided.
+The 'data' variable can be a file name (example.txt), a list of comma 
+separated strings (["1,2,3", "4,5,6", ...]), or a list of already separated 
+values ([[1, 2, 3], [4, 5, 6], ...]).
 \end{DoxyVerb}
  \hypertarget{namespaceLovelyCorpus_a506bbed5530bdb141a96231a1997ebf1}{\index{Lovely\-Corpus@{Lovely\-Corpus}!egain@{egain}}
 \index{egain@{egain}!LovelyCorpus@{Lovely\-Corpus}}
@@ -86,22 +99,28 @@ overwritten unless a new file name is provided.
 )}}\label{namespaceLovelyCorpus_a506bbed5530bdb141a96231a1997ebf1}
 \begin{DoxyVerb}Compute the entropy gain of a given attribute.
 
-data can be either a list or a filename.
+The 'data' variable can be a file name (example.txt), a list of comma 
+separated strings (["1,2,3", "4,5,6", ...]), or a list of already separated 
+values ([[1, 2, 3], [4, 5, 6], ...]).
 \end{DoxyVerb}
- \hypertarget{namespaceLovelyCorpus_a550ec4a6c82e820d12e3c623f034324c}{\index{Lovely\-Corpus@{Lovely\-Corpus}!entropygain@{entropygain}}
-\index{entropygain@{entropygain}!LovelyCorpus@{Lovely\-Corpus}}
-\subsubsection[{entropygain}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-entropygain (
+ \hypertarget{namespaceLovelyCorpus_a8a304131798c4b8a33a69fa554a97a1d}{\index{Lovely\-Corpus@{Lovely\-Corpus}!entropy\-Gain@{entropy\-Gain}}
+\index{entropy\-Gain@{entropy\-Gain}!LovelyCorpus@{Lovely\-Corpus}}
+\subsubsection[{entropy\-Gain}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-entropy\-Gain (
 \begin{DoxyParamCaption}
-\item[{}]{fname, }
+\item[{}]{data, }
 \item[{}]{clposition = {\ttfamily LAST}}
 \end{DoxyParamCaption}
-)}}\label{namespaceLovelyCorpus_a550ec4a6c82e820d12e3c623f034324c}
+)}}\label{namespaceLovelyCorpus_a8a304131798c4b8a33a69fa554a97a1d}
 \begin{DoxyVerb}Computes the entropy gain of each attributes and returns a list 
 of those values.
 
 The list of values match the positions of the attributes in the file.
 The entropy gain is weighted by the number of different values that are
 possible for the attribute.
+
+The 'data' variable can be a file name (example.txt), a list of comma 
+separated strings (["1,2,3", "4,5,6", ...]), or a list of already separated 
+values ([[1, 2, 3], [4, 5, 6], ...]).
 \end{DoxyVerb}
  \hypertarget{namespaceLovelyCorpus_a84317382c4e7d9b457294b731ecfc59a}{\index{Lovely\-Corpus@{Lovely\-Corpus}!kfold@{kfold}}
 \index{kfold@{kfold}!LovelyCorpus@{Lovely\-Corpus}}
@@ -113,49 +132,64 @@ possible for the attribute.
 )}}\label{namespaceLovelyCorpus_a84317382c4e7d9b457294b731ecfc59a}
 \begin{DoxyVerb}Creates 'k' training files and 'k' test files.
 
-The file reference by 'fname' should be in the standard formatting 
-referenced in the documentation.  The names of the training and test
-files will be based on the provided 'fname'.  A list of filenames will 
-be returned.
+The file referenced by 'fname' can be relative or absolute path name.  
+The names of the training and test files will be based on the provided 
+'fname'.  Any suffix on the provided file name will be discarded and 
+replaced with either "train" or "test".
+
+Example: 
+    k = 2
+    fname = "data.txt"
+    output = ["data0.train", "data0.test", "data1.train", "data1.test"]
+
+A list of filenames will be returned.
 \end{DoxyVerb}
- \hypertarget{namespaceLovelyCorpus_a52842d2b8f172be63ef8fdeb83888e58}{\index{Lovely\-Corpus@{Lovely\-Corpus}!removeoutliers@{removeoutliers}}
-\index{removeoutliers@{removeoutliers}!LovelyCorpus@{Lovely\-Corpus}}
-\subsubsection[{removeoutliers}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-removeoutliers (
+ \hypertarget{namespaceLovelyCorpus_a2c0d954a1c41477e81887e5a941251fa}{\index{Lovely\-Corpus@{Lovely\-Corpus}!remove\-Outliers@{remove\-Outliers}}
+\index{remove\-Outliers@{remove\-Outliers}!LovelyCorpus@{Lovely\-Corpus}}
+\subsubsection[{remove\-Outliers}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-remove\-Outliers (
 \begin{DoxyParamCaption}
-\item[{}]{fname, }
+\item[{}]{data, }
 \item[{}]{amount, }
 \item[{}]{clposition = {\ttfamily LAST}, }
 \item[{}]{newfname = {\ttfamily None}}
 \end{DoxyParamCaption}
-)}}\label{namespaceLovelyCorpus_a52842d2b8f172be63ef8fdeb83888e58}
+)}}\label{namespaceLovelyCorpus_a2c0d954a1c41477e81887e5a941251fa}
 \begin{DoxyVerb}Remove a given amount of data outliers.
 
 The amount provided can either be an integer value or a decimal value.
 If it is an integer that number of outliers are removed.  If it is a 
 decimal that percentage of outliers are removed.  Outliers are 
 determined using their Euclidean distance from the mean for their class.
+    
+The 'data' variable can be a file name (example.txt), a list of comma 
+separated strings (["1,2,3", "4,5,6", ...]), or a list of already separated 
+values ([[1, 2, 3], [4, 5, 6], ...]).
 \end{DoxyVerb}
- \hypertarget{namespaceLovelyCorpus_a3599cd818c8da3df834d8b78348e9313}{\index{Lovely\-Corpus@{Lovely\-Corpus}!setintrange@{setintrange}}
-\index{setintrange@{setintrange}!LovelyCorpus@{Lovely\-Corpus}}
-\subsubsection[{setintrange}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-setintrange (
+ \hypertarget{namespaceLovelyCorpus_a65609991e13d0b639ac1520e1d666845}{\index{Lovely\-Corpus@{Lovely\-Corpus}!set\-Int\-Range@{set\-Int\-Range}}
+\index{set\-Int\-Range@{set\-Int\-Range}!LovelyCorpus@{Lovely\-Corpus}}
+\subsubsection[{set\-Int\-Range}]{\setlength{\rightskip}{0pt plus 5cm}def Lovely\-Corpus.\-set\-Int\-Range (
 \begin{DoxyParamCaption}
-\item[{}]{fname, }
+\item[{}]{data, }
 \item[{}]{mn, }
 \item[{}]{mx, }
 \item[{}]{clposition = {\ttfamily LAST}, }
 \item[{}]{attr = {\ttfamily \mbox{[}\mbox{]}}, }
 \item[{}]{newfname = {\ttfamily None}}
 \end{DoxyParamCaption}
-)}}\label{namespaceLovelyCorpus_a3599cd818c8da3df834d8b78348e9313}
+)}}\label{namespaceLovelyCorpus_a65609991e13d0b639ac1520e1d666845}
 \begin{DoxyVerb}Change attributes so that they fall within the given range.
 
-All attributes are changed to fall within the range. The range is
-defined as inclusive of the min and max values provided.
+All attributes are changed to be integers that fall within the range. 
+The range is defined as inclusive of the min and max values provided.
 i.e. [mn, mx]. The index of the classifier for each entry is stored
 in the clposition variable.  If only certain attributes should be 
-changes a list of indices can be included in the attr variable. The
-defaul behavior is to overwrite the existing file, but a new file 
+changed a list of indices can be included in the attr variable. The
+default behavior is to overwrite the existing file, but a new file 
 name can be included.
+
+The 'data' variable can be a file name (example.txt), a list of comma 
+separated strings (["1,2,3", "4,5,6", ...]), or a list of already separated 
+values ([[1, 2, 3], [4, 5, 6], ...]).
 \end{DoxyVerb}
  
 

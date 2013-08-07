@@ -5,6 +5,11 @@
 # see the file COPYING in this distribution for license terms.
 ####################################################
 
+"""
+Lovely Coorpus is a corpus management toolkit designed to make sanitizing
+data sets easier.
+"""
+
 import sys
 import random
 import math
@@ -13,13 +18,15 @@ from types import *
 FIRST = 0
 LAST = -1
 
-def attributecount(fname):
+def attributeCount(data):
     """
-    Verify that all elements of tha file have the same number of attributes.
+    Verify that all elements in the data have the same number of attributes.
+
+    The 'data' variable can be a file name (example.txt), a list of comma 
+    separated strings (["1,2,3", "4,5,6", ...]), or a list of already separated 
+    values ([[1, 2, 3], [4, 5, 6], ...]).
     """
-    data = _getdata(fname)
-    if not data:
-        return
+    data = _checkData(data)
     l = len(data[0])
     for d in data:
         if len(d) != l:
@@ -29,7 +36,7 @@ def attributecount(fname):
                 return False
     return True
 
-def removeoutliers(fname, amount, clposition=LAST, newfname=None):
+def removeOutliers(data, amount, clposition=LAST, newfname=None):
     """
     Remove a given amount of data outliers.
 
@@ -37,24 +44,27 @@ def removeoutliers(fname, amount, clposition=LAST, newfname=None):
     If it is an integer that number of outliers are removed.  If it is a 
     decimal that percentage of outliers are removed.  Outliers are 
     determined using their Euclidean distance from the mean for their class.
-    """    
+        
+    The 'data' variable can be a file name (example.txt), a list of comma 
+    separated strings (["1,2,3", "4,5,6", ...]), or a list of already separated 
+    values ([[1, 2, 3], [4, 5, 6], ...]).
+    """
     if type(amount) is IntType:
         isint = True
-    elif type(amount) is FloatType:
-        isint = False
     else:
-        assert type(amount) is IntType
-    data = _getdata(fname)
-    if not data:
-        return
-    deta = _splitdata(data)
-    avg = _getaverage(data, clposition):
+        assert type(amount) is FloatType
+        isint = False
+    if not newfname:
+        assert type(data) is StringType
+        newfname = data
+    data = _checkData(data)
+    avg = _getaverage(data, clposition)
     dist = []
     for d in data:
         cl = d.pop(clposition)
         total = 0
         for i in len(d):
-            total += (avg[cl][i] - d[i])**2
+            total += (avg[cl][i] - float(d[i]))**2
         dist.append(total**0.5)
     if not isint:
         amount = int(len(data) * amount + 0.9)
@@ -77,7 +87,7 @@ def _getaverage(data, clposition):
         if total.has_key(cl):
             count[cl] += 1.0
             for i in len(d):
-                total[cl][i] += d[i]
+                total[cl][i] += float(d[i])
         else:
             count[cl] = 1.0
             total[cl] = d
@@ -86,46 +96,61 @@ def _getaverage(data, clposition):
         avg[k] = total[k] / count[k]
     return avg
     
-def duplicate(fname, remove=False, newfname=None):
+def checkDuplicates(data, remove=False, fname=None):
     """
     Check the data for an duplicate entries.
 
-    If the remove flag is set, duplicates are removed and the file is
-    overwritten unless a new file name is provided.
+    If the remove flag is set, duplicates are removed and the data is
+    written to the file name provided.
+
+    The 'data' variable can be a file name (example.txt), a list of comma 
+    separated strings (["1,2,3", "4,5,6", ...]), or a list of already separated 
+    values ([[1, 2, 3], [4, 5, 6], ...]).
     """
-    data = _getdata(fname)
-    if not data:
-        return
+    data = _checkData(data)
+    if remove:
+        assert type(fname) is StringType
     for i in range(len(data)):
-        d = data.pop()
+        d = data.pop(0)
         if d in data:
             if not remove:
                 return False
         else:
             data.append(d)
+    if remove:
+        with open(fname, 'w+') as f:
+            for d in data:
+                f.write(','.join(str(x) for x in d) + '\n')
     return True
 
-def setintrange(fname, mn, mx, clposition=LAST, attr=[], newfname=None):
+def setIntRange(data, mn, mx, clposition=LAST, attr=[], newfname=None):
     """
     Change attributes so that they fall within the given range.
 
-    All attributes are changed to fall within the range. The range is
-    defined as inclusive of the min and max values provided.
+    All attributes are changed to be integers that fall within the range. 
+    The range is defined as inclusive of the min and max values provided.
     i.e. [mn, mx]. The index of the classifier for each entry is stored
     in the clposition variable.  If only certain attributes should be 
-    changes a list of indices can be included in the attr variable. The
-    defaul behavior is to overwrite the existing file, but a new file 
+    changed a list of indices can be included in the attr variable. The
+    default behavior is to overwrite the existing file, but a new file 
     name can be included.
+
+    The 'data' variable can be a file name (example.txt), a list of comma 
+    separated strings (["1,2,3", "4,5,6", ...]), or a list of already separated 
+    values ([[1, 2, 3], [4, 5, 6], ...]).
     """
     assert type(mn) is IntType
     assert type(mx) is IntType
     assert type(clposition) is IntType
     assert type(attr) is ListType
     assert mn < mx
-    data = _getdata(fname)
-    if not data:
-        return
-    data = _splitdata(data)
+    if newfname:
+        assert type(newfname) is StringType
+    elif type(data) is StringType:
+        newfname = data
+    else:
+        sys.exit("A filename nust be provided for setIntRange")
+    data = _checkData(data)
     if attr == []:
         attr = range(len(data[0]))
         attr.pop(clposition)
@@ -133,15 +158,13 @@ def setintrange(fname, mn, mx, clposition=LAST, attr=[], newfname=None):
     curMin = mn
     for i in range(len(data)):
         for a in attr:
-            curMax = max(data[i][a], curMax)
-            curMin = min(data[i][a], curMin)
+            curMax = max(float(data[i][a]), curMax)
+            curMin = min(float(data[i][a]), curMin)
     div = mx - mn + 1.0
     scale = div/(curMax - curMin + 1.0)
     for i in range(len(data)):
         for a in attr:
-            data[i][a] = int(mn + (data[i][a]*scale))
-    if not newfname:
-        newfname = fname
+            data[i][a] = int(mn + (int(data[i][a])*scale))
     with open(newfname, 'w+') as f:
         for d in data:
             f.write(','.join(str(x) for x in d) + '\n')
@@ -151,17 +174,30 @@ def kfold(fname, k):
     """
     Creates 'k' training files and 'k' test files.
 
-    The file reference by 'fname' should be in the standard formatting 
-    referenced in the documentation.  The names of the training and test
-    files will be based on the provided 'fname'.  A list of filenames will 
-    be returned.
+    The file referenced by 'fname' can be relative or absolute path name.  
+    The names of the training and test files will be based on the provided 
+    'fname'.  Any suffix on the provided file name will be discarded and 
+    replaced with either "train" or "test".
+
+    Example: 
+        k = 2
+        fname = "data.txt"
+        output = ["data0.train", "data0.test", "data1.train", "data1.test"]
+
+    A list of filenames will be returned.
     """
     assert type(k) is IntType
+    assert type(fname) is StringType
     assert k > 1
-    data = _getdata(fname)
-    if not data:
+    data = []
+    try:
+        with open(fname) as f:
+            for l in f:
+                data.append(l)
+    except IOError:
+        print "Invalid Filename"
         return
-    rname = fname.split('.')[0]
+    rname = fname.rsplit('.', 1)[0]
     extr = 0
     if len(data) % k != 0:
         extr = 1
@@ -188,7 +224,7 @@ def kfold(fname, k):
                 f.write(d)
     return names
 
-def entropygain(fname, clposition=LAST):
+def entropyGain(data, clposition=LAST):
     """
     Computes the entropy gain of each attributes and returns a list 
     of those values.
@@ -196,11 +232,13 @@ def entropygain(fname, clposition=LAST):
     The list of values match the positions of the attributes in the file.
     The entropy gain is weighted by the number of different values that are
     possible for the attribute.
+
+    The 'data' variable can be a file name (example.txt), a list of comma 
+    separated strings (["1,2,3", "4,5,6", ...]), or a list of already separated 
+    values ([[1, 2, 3], [4, 5, 6], ...]).
     """
-    data = _getdata(fname)
-    if not data:
-        return
-    data = [data[x].split(',') for x in range(len(data))]
+    assert type(clposition) is IntType
+    data = _checkData(data)
     egains = []
     for a in range(len(data[0])):
         egains.append(egain(data, a, clposition))
@@ -211,13 +249,13 @@ def egain(data, attr, clposition):
     """
     Compute the entropy gain of a given attribute.
 
-    data can be either a list or a filename.
+    The 'data' variable can be a file name (example.txt), a list of comma 
+    separated strings (["1,2,3", "4,5,6", ...]), or a list of already separated 
+    values ([[1, 2, 3], [4, 5, 6], ...]).
     """
     assert type(attr) is IntType
-    if type(data) is not ListType:
-        data = _getdata(data)
-        if not data:
-            return
+    assert type(clposition) is IntType
+    data = _checkData(data)
     freq = {}
     subentropy = 0.0
     for d in data:
@@ -243,7 +281,7 @@ def _entropy(data, clposition):
         entropy += -(f/len(data) * math.log(f/len(data), 2))
     return entropy
 
-def checkrange(fname, minval, maxval, checklist=[], clposition=LAST, remove=False, truncate=False):
+def checkRange(data, minval, maxval, checklist=[], clposition=LAST, remove=False, truncate=False):
     """
     Verify that the attributes are with the provided range.
 
@@ -252,30 +290,41 @@ def checkrange(fname, minval, maxval, checklist=[], clposition=LAST, remove=Fals
     containing a value outside the range are removed.  If the truncate flag
     is set the values will be truncated to fall within the provided range.  If 
     the remove or truncate flag are not set, a list of the line numbers that contain
-    out of bounds values is returned.
+    out of bounds values is returned.  Non numerical attributes that are included 
+    in the checklist are ignored.
+
+    The 'data' variable can be a file name (example.txt), a list of comma 
+    separated strings (["1,2,3", "4,5,6", ...]), or a list of already separated 
+    values ([[1, 2, 3], [4, 5, 6], ...]).
     """
-    assert type(checkList) is ListType
+    assert type(checklist) is ListType
     assert type(minval) is IntType
     assert type(maxval) is IntType
     assert minval < maxval
     assert type(clposition) is IntType
-    data = _getdata(fname)
-    if not data:
-        return
-    data = [d.split(',') for d in data]
-    if checkList = []:
+    assert type(remove) is BooleanType
+    assert type(truncate) is BooleanType
+    if remove or truncate:
+        assert type(data) is StringType
+        fname = data
+    data = _checkData(data)
+    if checklist == []:
         checklist=range(len(data[0]))
         checklist.pop(clposition)
     linenums = []
     for i in range(len(data)):
         for a in checklist:
-            if int(data[i][a]) > maxval:
-                data[i][a] = str(maxval)
-                linenums.append(i)
-            elif int(data[i][a]) < minval:
-                data[i][a] = str(minval)
-                linenums.append(i)
+            try:
+                if float(data[i][a]) > maxval:
+                    data[i][a] = str(maxval)
+                    linenums.append(i)
+                elif float(data[i][a]) < minval:
+                    data[i][a] = str(minval)
+                    linenums.append(i)
+            except ValueError:
+                pass
     if remove:
+        #Pop the offending line numbers in reverse order
         linenums = list(set(linenums))
         linenums.sort()
         linenums.reverse()
@@ -284,22 +333,22 @@ def checkrange(fname, minval, maxval, checklist=[], clposition=LAST, remove=Fals
     if remove or truncate:
         with open(fname) as f:
             for d in data:
-                f.write(','.join(d) + '\n'
+                f.write(','.join(d) + '\n')
     else:
         return linenums
 
-def _getdata(fname):    
-    try:
-        data = []
-        with open(fname) as f:
-            for l in f:
-                data.append(l)
-    except IOError:
-        print "Invalid filename"
-        return None
-    return data
-
-def _splitdata(data): 
-    data = [d.split(',') for d in data]
-    data = [[int(data[x][y]) for y in range(len(data[x]))] for x in range(len(data))]
+def _checkData(data):
+    if type(data) is StringType:
+        try:
+            with open(data) as f:
+                data = []
+                for l in f:
+                    data.append(l)
+        except IOError:
+            print "Invalid Filename"
+            sys.exit(0)
+    if type(data) is ListType:
+        if type(data[0]) is not ListType:
+            assert type(data[0]) is StringType
+            data = [d.split(',') for d in data]
     return data

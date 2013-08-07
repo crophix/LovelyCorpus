@@ -11,7 +11,7 @@ import os
 import sys
 
 SEPERATE = "********************"
-ALLTESTS = ["kfold", "setintrange", "entropygain", "checkrange"]
+ALLTESTS = ["kfold", "setIntRange", "entropyGain", "checkRange"]
 
 def runTests(tests = ALLTESTS):
     print SEPERATE
@@ -38,12 +38,12 @@ def runTests(tests = ALLTESTS):
         except AssertionError:
             print "Failed correctly for k=1"
         print SEPERATE
-    if "setintrange" in tests:
+    if "setIntRange" in tests:
         print "---Testing setintrange---"
         fname = "testFiles/1d/optdigits.data"
         print "Change range from 0-16 to 1-4"
         newname=fname+'.temp'
-        setintrange(fname, 1, 4, newfname=newname)
+        setIntRange(fname, 1, 4, newfname=newname)
         print "checking range"
         with open(newname) as f:
             count = 0
@@ -54,21 +54,21 @@ def runTests(tests = ALLTESTS):
         print "---" + str(count) + " Val out of range---"
         os.remove(newname)
         print SEPERATE
-    if "entropygain" in tests:
+    if "entropyGain" in tests:
         print "---Testing entropygain---"
         fname = "testFiles/1d/entropytest.data"
-        print entropygain(fname)
+        print entropyGain(fname)
         print SEPERATE
-    if "checkrange" in tests:
+    if "checkRange" in tests:
         print "---Testing checkrange---"
         fname = "testFiles/1d/optdigits.data"
         print "checking for actual range 0-16"
-        if checkrange(fname, 0, 16) == []:
+        if checkRange(fname, 0, 16) == []:
             print "All lines in range 0-16"
         else:
             print "---ERROR---"
         print "checking smaller range"
-        if checkrange(fname, 2, 10) == []:
+        if checkRange(fname, 2, 10) != []:
             print "Lines outside of range 2-10"
         else:
             print "---ERROR---"

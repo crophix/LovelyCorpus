@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['checkrange',['checkrange',['../namespaceLovelyCorpus.html#a6cc631182ed1413c6f64a00d0ef4f2b9',1,'LovelyCorpus']]]
+  ['checkduplicates',['checkDuplicates',['../namespaceLovelyCorpus.html#a4423563351da00085aec39ce67902fbf',1,'LovelyCorpus']]],
+  ['checkrange',['checkRange',['../namespaceLovelyCorpus.html#aa049ae6116bbf9cdc5af242ac1b8e2c2',1,'LovelyCorpus']]]
 ];

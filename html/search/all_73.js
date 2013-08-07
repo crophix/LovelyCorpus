@@ -1,5 +1,5 @@
 var searchData=
 [
   ['seperate',['SEPERATE',['../namespaceFlogCorpus.html#a4c964280a15bad02d7087b10d7f6100a',1,'FlogCorpus']]],
-  ['setintrange',['setintrange',['../namespaceLovelyCorpus.html#a3599cd818c8da3df834d8b78348e9313',1,'LovelyCorpus']]]
+  ['setintrange',['setIntRange',['../namespaceLovelyCorpus.html#a65609991e13d0b639ac1520e1d666845',1,'LovelyCorpus']]]
 ];
