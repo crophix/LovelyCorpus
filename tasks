@@ -1,0 +1,15 @@
+Current task list for Lovely Corpus
+
+- expand features to work on data sets that are too large to store in memory
+
+- alter an attributes values to fit a normal distribution curve.
+    - similar to the set int range feature
+
+- build an easy to run suite of tests that can be done with a single call
+    - to avoid the user needing to execute each check individually
+
+- add a feature to execute external code
+    - some sort of config file needs to be created for each external tool
+        - the cofig file will be needed to set the current formatting to 
+          match what is required, and to decifer the output
+          
